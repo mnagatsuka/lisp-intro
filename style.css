@@ -1,0 +1,98 @@
+:root {
+  --bg: #fdfdfb;
+  --fg: #1f2328;
+  --muted: #656d76;
+  --accent: #6b3fa0;
+  --border: #e3e3df;
+  --code-bg: #f3f2ee;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #16161a;
+    --fg: #e6e6e6;
+    --muted: #9aa0a6;
+    --accent: #b794f4;
+    --border: #2d2d33;
+    --code-bg: #212127;
+  }
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font: 16px/1.7 system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+.site-header,
+main,
+.site-footer {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.site-header { padding-top: 48px; padding-bottom: 16px; }
+.site-header h1 { margin: 0; font-size: 2.2rem; letter-spacing: -0.02em; }
+.tagline { margin: 4px 0 20px; color: var(--muted); }
+
+nav { display: flex; flex-wrap: wrap; gap: 8px 16px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+nav a { font-size: 0.9rem; }
+
+a { color: var(--accent); }
+
+section { padding: 32px 0 8px; }
+h2 { margin: 0 0 8px; font-size: 1.6rem; }
+h3 { margin: 28px 0 4px; font-size: 1.1rem; }
+
+ul { padding-left: 1.3em; margin: 6px 0; }
+li { margin: 2px 0; }
+
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.9em;
+  background: var(--code-bg);
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+
+pre {
+  margin: 10px 0;
+  padding: 12px 16px;
+  background: var(--code-bg);
+  border-radius: 8px;
+  overflow-x: auto;
+}
+pre code { background: none; padding: 0; font-size: 0.88rem; }
+
+blockquote {
+  margin: 14px 0;
+  padding: 2px 16px;
+  border-left: 3px solid var(--accent);
+}
+blockquote p { margin: 8px 0 4px; }
+blockquote footer { margin-bottom: 8px; color: var(--muted); font-size: 0.88rem; }
+
+.takeaway {
+  margin: 8px 0 0;
+  padding: 12px 16px;
+  background: var(--code-bg);
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+.timeline { list-style: none; padding-left: 0; }
+.timeline > li { margin: 10px 0; }
+.year { display: inline-block; min-width: 5.5em; font-weight: 600; color: var(--accent); }
+.timeline ul { margin-left: 5.5em; }
+
+.site-footer { padding-top: 32px; padding-bottom: 48px; color: var(--muted); font-size: 0.85rem; }
+
+@media (max-width: 480px) {
+  .timeline ul { margin-left: 1.3em; }
+}

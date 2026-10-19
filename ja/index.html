@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lisp入門</title>
+  <meta name="description" content="Lispを気軽に紹介するページ。基本的な考え方、Lispの魅力、そして今どこで使われているかをまとめました。">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <header class="site-header">
+    <h1>Lisp入門</h1>
+    <p class="tagline">シンプルで小さいのに、無限の表現力。</p>
+    <nav>
+      <a href="#what">Lispとは</a>
+      <a href="#elegant">Lispの魅力</a>
+      <a href="#today">Lispの現在</a>
+      <a href="#references">参考文献</a>
+      <a href="#discussion">ディスカッション</a>
+      <a href="../index.html" hreflang="en" class="lang">English</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="what">
+      <h2>1. Lispとは</h2>
+
+      <h3>著名人の言葉</h3>
+      <blockquote>
+        <p>Lisp自身をLispで定義した、わずか半ページのコードを「ソフトウェアにおけるマクスウェル方程式」と呼んだ。</p>
+        <footer>アラン・ケイ（計算機科学者） &mdash; <a href="https://queue.acm.org/detail.cfm?id=1039523">A Conversation with Alan Kay</a></footer>
+      </blockquote>
+      <blockquote>
+        <p>Lispを学ぶ価値は、ついにそれを理解した瞬間に得られる、深い悟りのような体験にある。たとえLisp自体をあまり使わなくなったとしても、その体験は一生にわたってあなたをより優れたプログラマにしてくれる。</p>
+        <footer>エリック・S・レイモンド（プログラマ） &mdash; <a href="http://www.catb.org/~esr/faqs/hacker-howto.html">How To Become A Hacker</a></footer>
+      </blockquote>
+      <blockquote>
+        <p>自身が起業したViaweb（ストア構築ツールをLispで開発）の「秘密兵器」はLispだったと語った。</p>
+        <footer>ポール・グレアム（スタートアップ創業者） &mdash; <a href="https://paulgraham.com/avg.html">Beating the Averages</a></footer>
+      </blockquote>
+
+      <h3>基本的な考え方</h3>
+      <ul>
+        <li>Lispは単一の言語ではなく、Common Lisp、Scheme、Clojure、Emacs Lispなどを含む言語ファミリーである。</li>
+        <li>すべてがS式、つまり <code>(operator arg1 arg2 ...)</code> という形のリストで表される。
+          <ul><li>例: <code>(+ 1 (* 2 3))</code>。コードもデータも同じ構文で書く。</li></ul>
+        </li>
+        <li>コードはデータである（ホモイコニシティ）。
+          <ul>
+            <li>プログラムはリストなので、プログラム自身で組み立てたり加工したりできる。</li>
+            <li>この性質が、コードを生成するコードであるマクロを可能にしている。</li>
+          </ul>
+        </li>
+        <li>小さな核を、抽象化で積み上げていく。
+          <ul>
+            <li>少数のプリミティブと <code>lambda</code> があれば、あとはそれらを組み合わせて作れる。</li>
+            <li>Lispの評価器は、Lisp自身で1〜2ページほどで書ける（SICPのメタサーキュラー評価器の発想）。</li>
+          </ul>
+        </li>
+      </ul>
+
+      <h3>Lispの歴史</h3>
+      <ul class="timeline">
+        <li><span class="year">1958</span> ジョン・マッカーシー（MIT）が、AI研究のためにLispを考案。名前は「LISt Processing」に由来する。Fortranに次いで、現在も使われている最古の高水準言語である。</li>
+        <li><span class="year">1960年頃</span> スティーブ・ラッセルが、マッカーシーの <code>eval</code> をIBM 704上で実装。理論が実際に動くインタプリタとなり、1962年にLisp 1.5マニュアルが公開された。</li>
+        <li><span class="year">1970〜80年代</span> AI研究の中心言語となる（MacLisp、Interlisp、Lispマシンなど）。しかし1980年代後半の「AIの冬」で大きな打撃を受ける。</li>
+        <li><span class="year">1975</span> サスマンとスティールがScheme（MIT）を開発。レキシカルスコープを備えた最小限の設計で、のちにSICPで使われる言語となった。</li>
+        <li><span class="year">1984〜94</span> Common Lispが乱立していた方言を統一し、1994年にANSI規格となった。</li>
+        <li><span class="year">1980年代</span> GNU Emacsが登場。拡張言語としてEmacs Lispが使われている。</li>
+        <li><span class="year">2007</span> リッチ・ヒッキーがClojureを発表。モダンなLispをJVM上で使えるようにした。</li>
+        <li><span class="year">現在</span> 主流ではないものの、今も使われ続け、影響力も大きい。
+          <ul>
+            <li>現在も開発が続く処理系: SBCL、Clojure、Racket、Guile、Emacs Lisp。</li>
+            <li>Lispのアイデアは多くの言語に受け継がれている: ガベージコレクション、第一級関数、ラムダ式、REPL、動的型付けなど。</li>
+            <li>JavaScriptは、ブラウザ上でSchemeを動かすという構想から生まれた（ブレンダン・アイク）。詳しくは <a href="https://auth0.com/blog/a-brief-history-of-javascript/">A Brief History of JavaScript</a> を参照。</li>
+            <li>採用例: Nubank（Clojure）、Grammarlyの文法エンジン（Common Lisp）、Viaweb（Lisp）。</li>
+          </ul>
+        </li>
+      </ul>
+    </section>
+
+    <section id="elegant">
+      <h2>2. Lispの魅力</h2>
+      <p class="takeaway">シンプルで小さいのに、無限の表現力。言語そのものを、解きたい問題に合わせて育てられる。</p>
+
+      <h3>1. 統一された構文</h3>
+      <ul>
+        <li>書き方は <code>(operator arg ...)</code> の一つだけ。演算子の優先順位も、例外的な構文もない。</li>
+        <li>括弧によって、プログラムの構造（木構造）がそのまま見える。</li>
+      </ul>
+      <pre><code>(if (&gt; x 0) "pos" "non-pos")   ; 関数呼び出しと同じ形</code></pre>
+
+      <h3>2. コードはデータ</h3>
+      <ul>
+        <li>プログラムはリストなので、別のプログラムを調べたり、組み立てたりできる。</li>
+      </ul>
+      <pre><code>'(+ 1 2)         ; 3つの要素を持つただのリスト
+(eval '(+ 1 2))  ; =&gt; 3</code></pre>
+
+      <h3>3. マクロ: 言語そのものを拡張できる</h3>
+      <ul>
+        <li>マクロは実行前にコードを書き換えるので、新しい構文を自分で追加できる。</li>
+        <li>多くの言語では、新しい構文を足すには言語仕様の更新が必要になる。</li>
+      </ul>
+      <pre><code>(defmacro unless (test &amp;body body)
+  `(if ,test nil (progn ,@body)))</code></pre>
+
+      <h3>4. 値としての関数とクロージャ</h3>
+      <ul>
+        <li>関数は、ほかの値と同じように渡したり、返したり、保存したりできる。</li>
+        <li>クロージャは周囲の環境を保持する。これだけで、オブジェクトやカウンタ、ストリームまで作れる。</li>
+      </ul>
+      <pre><code>(map (lambda (x) (* x x)) '(1 2 3))  ; =&gt; (1 4 9)</code></pre>
+
+      <h3>5. REPLによる対話的な開発</h3>
+      <ul>
+        <li>動いているプログラムの中で、コードを書き、実行し、変更する。再起動の手間がない。</li>
+        <li>Emacsのカスタマイズも同じスタイルで、動いているエディタを内側から書き換えていく。</li>
+      </ul>
+    </section>
+
+    <section id="today">
+      <h2>3. Lispの現在</h2>
+
+      <h3>古典的AI</h3>
+      <ul>
+        <li>記号AI（エキスパートシステム、プランニング、自然言語処理など。例: SHRDLU）の主要言語だった。</li>
+        <li>シンボルとリストは、知識やルールの表現と相性が良い。</li>
+        <li>常識知識ベースを構築する長期プロジェクトCycも、この流れから生まれた。</li>
+        <li>AIの冬と、統計的手法やニューラルネットワークの台頭により、勢いを失った。</li>
+        <li>今あらためて注目したい理由: 記号的推論が、LLMを補う技術として見直されつつある。</li>
+      </ul>
+
+      <h3>ツール</h3>
+      <ul>
+        <li>Emacs: Emacs Lispを使えば、動作中のエディタをその場で書き換えられる。Org-modeやMagitも、この上に作られている。</li>
+        <li>CAD: AutoCADにはAutoLISPが組み込まれ、図面作業の自動化に使われている。図面は入れ子構造のデータなので、Lispとの相性が良い。</li>
+      </ul>
+
+      <h3>システム</h3>
+      <ul>
+        <li>表現力が求められるニッチな領域を中心に、今もLispで動くプロダクトがある。</li>
+        <li>Nubank（デジタルバンク）は、JVM上のClojureを使っている。</li>
+        <li>Grammarly（文法エンジン）とITA Software（航空券検索。のちのGoogle Flights）は、Common Lispを使っている。</li>
+        <li>Rigettiの量子コンピュータ向けコンパイラQuilcは、Common Lispで書かれている。</li>
+      </ul>
+    </section>
+
+    <section id="references">
+      <h2>4. 参考文献</h2>
+      <h3>Common Lisp</h3>
+      <ul>
+        <li><a href="https://www.oreilly.co.jp/books/9784873115870/">Land of Lisp</a></li>
+        <li><a href="https://www.amazon.co.jp/dp/4627836090">対話によるCommon Lisp入門</a></li>
+        <li><a href="https://paulgraham.com/acl.html">ANSI Common Lisp</a></li>
+      </ul>
+      <h3>マクロ</h3>
+      <ul>
+        <li><a href="https://paulgraham.com/onlisptext.html">On Lisp</a>（無料公開）</li>
+      </ul>
+      <h3>ポール・グレアム</h3>
+      <ul>
+        <li><a href="https://www.amazon.co.jp/dp/4274065979">ハッカーと画家 コンピュータ時代の創造者たち</a></li>
+      </ul>
+      <h3>Common Lispのコミュニティ</h3>
+      <ul>
+        <li><a href="https://common-lisp.net/">common-lisp.net</a>（Common Lisp Foundationのハブ。プロジェクトホスティング、リソース、入門情報）</li>
+        <li><a href="https://lisp-lang.org/">Lisp-lang</a>（入門ガイド、チュートリアル、書籍リスト）</li>
+        <li><a href="https://cliki.net/">CLiki</a>（Common Lispのwiki）</li>
+      </ul>
+      <h3>Schemeとプログラミングの基礎</h3>
+      <ul>
+        <li><a href="https://www.vocrf.net/docs_ja/jsicp.pdf">計算機プログラムの構造と解釈（SICP）</a></li>
+      </ul>
+    </section>
+
+    <section id="discussion">
+      <h2>5. ディスカッション</h2>
+
+      <h3>1. これからのAIとLisp</h3>
+      <ul>
+        <li>LispはAIの未来で重要な役割を果たせるだろうか？
+          <ul>
+            <li>特定分野のルールや現実世界のルールをAIに理解させる助けになるのではないか（ワールドモデル）。
+              <ul>
+                <li><a href="https://arxiv.org/abs/1803.10122">World Models</a>、David Ha, Jürgen Schmidhuber（2018）</li>
+                <li><a href="https://openreview.net/pdf?id=BZ5a1r-kVsf">A Path Towards Autonomous Machine Intelligence</a>、Yann LeCun（2022）</li>
+                <li><a href="https://arxiv.org/abs/2012.05876">Neurosymbolic AI: The 3rd Wave</a>、Artur d'Avila Garcez, Luis C. Lamb（2020）</li>
+              </ul>
+            </li>
+            <li>圏論を通じて、より高い抽象化と、真のマルチモーダルAIを実現できるのではないか。
+              <ul>
+                <li><a href="https://arxiv.org/abs/2402.15332">Position: Categorical Deep Learning is an Algebraic Theory of All Architectures</a>、Bruno Gavranović, Paul Lessard, Andrew Dudzik, Tamara von Glehn, João G. M. Araújo, Petar Veličković（ICML 2024）</li>
+                <li><a href="https://arxiv.org/abs/2106.07032">Category Theory in Machine Learning</a>、Dan Shiebler, Bruno Gavranović, Paul Wilson（2021）</li>
+                <li><a href="https://arxiv.org/abs/1711.10455">Backprop as Functor: A compositional perspective on supervised learning</a>、Brendan Fong, David I. Spivak, Rémy Tuyéras（LICS 2019）</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+
+      <h3>2. 実世界のシステムとLisp</h3>
+      <ul>
+        <li>実世界のシステムやアプリケーション、ツールの中で、Lispの強みが本当に活きるのはどんな場面だろうか？
+          <ul><li>低レイヤーの実装における、メモリ安全性と性能の向上（例: OS、ネットワーク、ロボティクス）。</li></ul>
+        </li>
+      </ul>
+
+      <h3>3. Lispの課題とコミュニティ</h3>
+      <ul>
+        <li>Lispの欠点は何だろうか？</li>
+        <li>Lispのコミュニティはどんな雰囲気で、成長するには何が必要だろうか？
+          <ul>
+            <li><a href="https://common-lisp.net/">common-lisp.net</a>（Common Lisp Foundationのハブ。プロジェクトホスティング、リソース、入門情報）</li>
+            <li><a href="https://lisp-lang.org/">Lisp-lang</a>（入門ガイド、チュートリアル、書籍リスト）</li>
+            <li><a href="https://cliki.net/">CLiki</a>（Common Lispのwiki）</li>
+          </ul>
+        </li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>カジュアルな技術交流会のために作成。</p>
+  </footer>
+</body>
+</html>

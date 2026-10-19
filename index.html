@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lisp Intro</title>
+  <meta name="description" content="A short, casual introduction to Lisp: the core idea, why it is elegant, and where it is used today.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <h1>Lisp Intro</h1>
+    <p class="tagline">Simple and small, yet endlessly expressive.</p>
+    <nav>
+      <a href="#what">What is Lisp</a>
+      <a href="#elegant">Why it's elegant</a>
+      <a href="#today">Lisp today</a>
+      <a href="#references">References</a>
+      <a href="#discussion">Discussion</a>
+      <a href="ja/index.html" hreflang="ja" class="lang">日本語</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="what">
+      <h2>1. What is Lisp</h2>
+
+      <h3>What others say</h3>
+      <blockquote>
+        <p>Called the half page of Lisp that defines Lisp in Lisp the "Maxwell's Equations of Software".</p>
+        <footer>Alan Kay, computer scientist &mdash; <a href="https://queue.acm.org/detail.cfm?id=1039523">A Conversation with Alan Kay</a></footer>
+      </blockquote>
+      <blockquote>
+        <p>Lisp is worth learning for the profound enlightenment experience you will have when you finally get it; that experience will make you a better programmer for the rest of your days, even if you never actually use Lisp itself a lot.</p>
+        <footer>Eric S. Raymond, programmer &mdash; <a href="http://www.catb.org/~esr/faqs/hacker-howto.html">How To Become A Hacker</a></footer>
+      </blockquote>
+      <blockquote>
+        <p>Credited Lisp as the "secret weapon" behind his startup Viaweb, whose store builder was written in Lisp.</p>
+        <footer>Paul Graham, startup founder &mdash; <a href="https://paulgraham.com/avg.html">Beating the Averages</a></footer>
+      </blockquote>
+
+      <h3>Core idea</h3>
+      <ul>
+        <li>Lisp is a family of languages (Common Lisp, Scheme, Clojure, Emacs Lisp), not one language.</li>
+        <li>Everything is an S-expression: a list written <code>(operator arg1 arg2 ...)</code>.
+          <ul><li>e.g. <code>(+ 1 (* 2 3))</code>, with the same syntax for code and data.</li></ul>
+        </li>
+        <li>Code is data (homoiconicity).
+          <ul>
+            <li>A program is a list that the program itself can build and manipulate.</li>
+            <li>This makes macros possible: code that writes code.</li>
+          </ul>
+        </li>
+        <li>Tiny core, built up by abstraction.
+          <ul>
+            <li>A few primitives plus <code>lambda</code> are enough to build the rest.</li>
+            <li>An evaluator for Lisp can be written in Lisp itself in a page or two (the idea behind SICP's metacircular evaluator).</li>
+          </ul>
+        </li>
+      </ul>
+
+      <h3>Short history</h3>
+      <ul class="timeline">
+        <li><span class="year">1958</span> John McCarthy (MIT) starts Lisp for AI research. The name comes from "LISt Processing". It is the second-oldest high-level language still in use, after Fortran.</li>
+        <li><span class="year">~1960</span> Steve Russell implements McCarthy's <code>eval</code> on the IBM 704. The theory becomes a working interpreter; the Lisp 1.5 manual follows in 1962.</li>
+        <li><span class="year">1970s&ndash;80s</span> Lisp dominates AI research (MacLisp, Interlisp, Lisp machines). The late-1980s AI winter hits it hard.</li>
+        <li><span class="year">1975</span> Scheme by Sussman and Steele (MIT): a minimal design with lexical scope, later the language of SICP.</li>
+        <li><span class="year">1984&ndash;94</span> Common Lisp consolidates the dialects; ANSI standard in 1994.</li>
+        <li><span class="year">1980s</span> GNU Emacs, with Emacs Lisp as its extension language.</li>
+        <li><span class="year">2007</span> Clojure by Rich Hickey brings a modern Lisp to the JVM.</li>
+        <li><span class="year">Today</span> Not mainstream, but alive and influential.
+          <ul>
+            <li>Still maintained: SBCL, Clojure, Racket, Guile, Emacs Lisp.</li>
+            <li>Its ideas spread widely: garbage collection, first-class functions, lambdas, the REPL, dynamic typing.</li>
+            <li>JavaScript started as an attempt to put Scheme in the browser (Brendan Eich). See <a href="https://auth0.com/blog/a-brief-history-of-javascript/">A Brief History of JavaScript</a>.</li>
+            <li>Real-world examples: Nubank (Clojure), Grammarly's grammar engine (Common Lisp), Viaweb (Lisp).</li>
+          </ul>
+        </li>
+      </ul>
+    </section>
+
+    <section id="elegant">
+      <h2>2. Why it's elegant</h2>
+      <p class="takeaway">Simple and small, yet endlessly expressive. You can grow the language toward your problem.</p>
+
+      <h3>1. Uniform syntax</h3>
+      <ul>
+        <li>Only one form: <code>(operator arg ...)</code>. No operator precedence, no special cases.</li>
+        <li>Parentheses make the structure of the program explicit (a tree).</li>
+      </ul>
+      <pre><code>(if (&gt; x 0) "pos" "non-pos")   ; same shape as a function call</code></pre>
+
+      <h3>2. Code is data</h3>
+      <ul>
+        <li>A program is a list, so programs can inspect and build other programs.</li>
+      </ul>
+      <pre><code>'(+ 1 2)         ; just a list of three items
+(eval '(+ 1 2))  ; =&gt; 3</code></pre>
+
+      <h3>3. Macros: extend the language itself</h3>
+      <ul>
+        <li>A macro rewrites code before it runs, so you can add new syntax.</li>
+        <li>In most languages, new syntax needs a language update.</li>
+      </ul>
+      <pre><code>(defmacro unless (test &amp;body body)
+  `(if ,test nil (progn ,@body)))</code></pre>
+
+      <h3>4. Functions as values and closures</h3>
+      <ul>
+        <li>Functions can be passed, returned, and stored like any value.</li>
+        <li>Closures capture their environment: enough to build objects, counters, and streams.</li>
+      </ul>
+      <pre><code>(map (lambda (x) (* x x)) '(1 2 3))  ; =&gt; (1 4 9)</code></pre>
+
+      <h3>5. Interactive development with the REPL</h3>
+      <ul>
+        <li>Write, run, and change code in a live running program. No restart cycle.</li>
+        <li>Same style as Emacs customization, where the running editor is edited from inside.</li>
+      </ul>
+    </section>
+
+    <section id="today">
+      <h2>3. Lisp today</h2>
+
+      <h3>Classic AI</h3>
+      <ul>
+        <li>Main language of symbolic AI: expert systems, planning, natural language (e.g. SHRDLU).</li>
+        <li>Symbols and lists map naturally to knowledge and rules.</li>
+        <li>Cyc, a long-running common-sense knowledge base project, grew out of this tradition.</li>
+        <li>Fell out of fashion with the AI winter and the rise of statistical and neural methods.</li>
+        <li>Worth revisiting: symbolic reasoning is coming back as a complement to LLMs.</li>
+      </ul>
+
+      <h3>Tools</h3>
+      <ul>
+        <li>Emacs: Emacs Lisp lets users rewrite the editor while it runs. Org-mode and Magit are built on it.</li>
+        <li>CAD: AutoCAD embeds AutoLISP for scripting drawings. A good fit, since drawings are nested data.</li>
+      </ul>
+
+      <h3>Systems</h3>
+      <ul>
+        <li>Real products still run on Lisp, mostly in niches where expressiveness matters.</li>
+        <li>Clojure at Nubank (digital bank) on the JVM.</li>
+        <li>Common Lisp at Grammarly (grammar engine) and ITA Software (flight search, later Google Flights).</li>
+        <li>Quilc, the compiler for Rigetti's quantum computers, is written in Common Lisp.</li>
+      </ul>
+    </section>
+
+    <section id="references">
+      <h2>4. References</h2>
+      <h3>Common Lisp</h3>
+      <ul>
+        <li><a href="https://www.oreilly.co.jp/books/9784873115870/">Land of Lisp</a></li>
+        <li><a href="https://www.amazon.co.jp/dp/4627836090">対話によるCommon Lisp入門</a></li>
+        <li><a href="https://paulgraham.com/acl.html">ANSI Common Lisp</a></li>
+      </ul>
+      <h3>Macros</h3>
+      <ul>
+        <li><a href="https://paulgraham.com/onlisptext.html">On Lisp</a> (free)</li>
+      </ul>
+      <h3>Paul Graham</h3>
+      <ul>
+        <li><a href="https://www.amazon.co.jp/dp/4274065979">ハッカーと画家 コンピュータ時代の創造者たち</a></li>
+      </ul>
+      <h3>Common Lisp community</h3>
+      <ul>
+        <li><a href="https://common-lisp.net/">common-lisp.net</a> (Common Lisp Foundation hub: project hosting, resources, getting started)</li>
+        <li><a href="https://lisp-lang.org/">Lisp-lang</a> (getting started, tutorials, and book list)</li>
+        <li><a href="https://cliki.net/">CLiki</a> (Common Lisp wiki)</li>
+      </ul>
+      <h3>Scheme and programming basics</h3>
+      <ul>
+        <li><a href="https://www.vocrf.net/docs_ja/jsicp.pdf">Structure and Interpretation of Computer Programs</a></li>
+      </ul>
+    </section>
+
+    <section id="discussion">
+      <h2>5. Discussion</h2>
+
+      <h3>1. Lisp in future AI</h3>
+      <ul>
+        <li>Could Lisp play an important role in the future of AI?
+          <ul>
+            <li>Helping AI understand domain-specific and real-world rules (world models).
+              <ul>
+                <li><a href="https://arxiv.org/abs/1803.10122">World Models</a>, David Ha and Jürgen Schmidhuber (2018)</li>
+                <li><a href="https://openreview.net/pdf?id=BZ5a1r-kVsf">A Path Towards Autonomous Machine Intelligence</a>, Yann LeCun (2022)</li>
+                <li><a href="https://arxiv.org/abs/2012.05876">Neurosymbolic AI: The 3rd Wave</a>, Artur d'Avila Garcez and Luis C. Lamb (2020)</li>
+              </ul>
+            </li>
+            <li>Enabling higher-level abstraction and truly multi-modal AI through category theory.
+              <ul>
+                <li><a href="https://arxiv.org/abs/2402.15332">Position: Categorical Deep Learning is an Algebraic Theory of All Architectures</a>, Bruno Gavranović, Paul Lessard, Andrew Dudzik, Tamara von Glehn, João G. M. Araújo, Petar Veličković (ICML 2024)</li>
+                <li><a href="https://arxiv.org/abs/2106.07032">Category Theory in Machine Learning</a>, Dan Shiebler, Bruno Gavranović, Paul Wilson (2021)</li>
+                <li><a href="https://arxiv.org/abs/1711.10455">Backprop as Functor: A compositional perspective on supervised learning</a>, Brendan Fong, David I. Spivak, Rémy Tuyéras (LICS 2019)</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+
+      <h3>2. Lisp in real-world systems</h3>
+      <ul>
+        <li>Where could Lisp's strengths really pay off in real-world systems, applications, and tools?
+          <ul><li>Memory safety and better performance in low-level implementations (e.g. OS, networking, robotics).</li></ul>
+        </li>
+      </ul>
+
+      <h3>3. Drawbacks and community</h3>
+      <ul>
+        <li>What are the drawbacks of Lisp?</li>
+        <li>What is the Lisp community like, and what does it need to grow?
+          <ul>
+            <li><a href="https://common-lisp.net/">common-lisp.net</a> (Common Lisp Foundation hub: project hosting, resources, getting started)</li>
+            <li><a href="https://lisp-lang.org/">Lisp-lang</a> (getting started, tutorials, and book list)</li>
+            <li><a href="https://cliki.net/">CLiki</a> (Common Lisp wiki)</li>
+          </ul>
+        </li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>Prepared for a casual tech chat</p>
+  </footer>
+</body>
+</html>
