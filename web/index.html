@@ -15,6 +15,7 @@
       <a href="#what">What is Lisp</a>
       <a href="#elegant">Why it's elegant</a>
       <a href="#today">Lisp today</a>
+      <a href="#demo">Demo</a>
       <a href="#references">References</a>
       <a href="#discussion">Discussion</a>
       <a href="ja/index.html" hreflang="ja" class="lang">日本語</a>
@@ -146,8 +147,37 @@
       </ul>
     </section>
 
+    <section id="demo">
+      <h2>4. Demo</h2>
+      <p class="takeaway">Four short demos, run live in a terminal with SBCL (compiled Common Lisp).</p>
+
+      <h3>Famous algorithms</h3>
+      <ul>
+        <li>Quicksort and Fibonacci, with Java, Python, and C versions alongside.</li>
+        <li>Point: the Lisp quicksort reads almost like its definition. Fibonacci shows that Lisp is compiled and fast, and gets faster still with type declarations.</li>
+      </ul>
+
+      <h3>Functional programming</h3>
+      <ul>
+        <li>A data-processing pipeline, and a small ToDo app designed in a DDD style.</li>
+        <li>Point: a few higher-order functions replace loops. Types and immutability make invalid states impossible to express.</li>
+      </ul>
+
+      <h3>Simple web server</h3>
+      <ul>
+        <li>A working web server, checked from the browser or <code>curl</code>.</li>
+        <li>Point: a few lines are enough, and a handler is just a function. It is the same style as the functional demo.</li>
+      </ul>
+
+      <h3>Macros</h3>
+      <ul>
+        <li>Our own version of the <code>unless</code> syntax.</li>
+        <li>Point: you can create new syntax in a few lines. Even <code>time</code> and <code>define-easy-handler</code>, used in the earlier demos, are macros, so macros underpin everything we saw.</li>
+      </ul>
+    </section>
+
     <section id="references">
-      <h2>4. References</h2>
+      <h2>5. References</h2>
       <h3>Common Lisp</h3>
       <ul>
         <li><a href="https://www.oreilly.co.jp/books/9784873115870/">Land of Lisp</a></li>
@@ -175,7 +205,7 @@
     </section>
 
     <section id="discussion">
-      <h2>5. Discussion</h2>
+      <h2>6. Discussion</h2>
 
       <h3>1. Lisp in future AI</h3>
       <ul>

@@ -15,6 +15,7 @@
       <a href="#what">Lispとは</a>
       <a href="#elegant">Lispの魅力</a>
       <a href="#today">Lispの現在</a>
+      <a href="#demo">デモ</a>
       <a href="#references">参考文献</a>
       <a href="#discussion">ディスカッション</a>
       <a href="../index.html" hreflang="en" class="lang">English</a>
@@ -146,8 +147,37 @@
       </ul>
     </section>
 
+    <section id="demo">
+      <h2>4. デモ</h2>
+      <p class="takeaway">SBCL（コンパイル型のCommon Lisp）を使い、ターミナルで4つの短いデモを実演する。</p>
+
+      <h3>有名なアルゴリズム</h3>
+      <ul>
+        <li>クイックソートとフィボナッチ。Java、Python、Cの版も並べて見せる。</li>
+        <li>ポイント: Lispのクイックソートは、定義がほぼそのままコードになる。フィボナッチでは、Lispがコンパイルされて速いこと、型宣言でさらに速くなることを見せる。</li>
+      </ul>
+
+      <h3>関数型プログラミング</h3>
+      <ul>
+        <li>データ処理のパイプラインと、DDD風に設計した小さなToDoアプリ。</li>
+        <li>ポイント: 高階関数を組み合わせれば、ループは要らなくなる。型とイミュータブルなデータで、不正な状態をそもそも作れなくできる。</li>
+      </ul>
+
+      <h3>簡易Webサーバ</h3>
+      <ul>
+        <li>動くWebサーバを作り、ブラウザや <code>curl</code> で確認する。</li>
+        <li>ポイント: 数行で動き、ハンドラはただの関数にすぎない。関数型のデモと同じ書き方でWebアプリが作れる。</li>
+      </ul>
+
+      <h3>マクロ</h3>
+      <ul>
+        <li>標準の <code>unless</code> 構文を、自分で作り直す。</li>
+        <li>ポイント: 新しい構文を数行で作れる。これまでのデモで使った <code>time</code> や <code>define-easy-handler</code> も実はマクロで、ここまでの全部がマクロに支えられている。</li>
+      </ul>
+    </section>
+
     <section id="references">
-      <h2>4. 参考文献</h2>
+      <h2>5. 参考文献</h2>
       <h3>Common Lisp</h3>
       <ul>
         <li><a href="https://www.oreilly.co.jp/books/9784873115870/">Land of Lisp</a></li>
@@ -175,7 +205,7 @@
     </section>
 
     <section id="discussion">
-      <h2>5. ディスカッション</h2>
+      <h2>6. ディスカッション</h2>
 
       <h3>1. これからのAIとLisp</h3>
       <ul>

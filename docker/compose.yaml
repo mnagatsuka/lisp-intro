@@ -1,0 +1,27 @@
+name: lisp-intro
+
+# 言語ごとに1サービス。samples/ を読み取り専用でマウントする。
+x-lang: &lang
+  volumes:
+    - ../samples:/samples:ro
+  working_dir: /samples
+
+services:
+  lisp:
+    <<: *lang
+    build: ./lisp
+  java:
+    <<: *lang
+    build: ./java
+  python:
+    <<: *lang
+    build: ./python
+  c:
+    <<: *lang
+    build: ./c
+  server:
+    <<: *lang
+    build: ./lisp
+    command: sbcl --script 03-web-server/server.lisp
+    ports:
+      - "4242:4242"
