@@ -18,9 +18,9 @@ A simple website for short, casual introduction to Lisp.
   - `ja/index.html`: Japanese page
   - `style.css`: shared stylesheet (light and dark mode)
 - `samples/`: sample code
-- `docs/`: specs for the sample code
+- `docs/`: specs for the sample code, plus Japanese guides to the Lisp syntax used (`docs/lisp/syntax.md`) and the SBCL REPL (`docs/lisp/sbcl-repl.md`)
 - `docker/`: Docker environment (`compose.yaml`, Dockerfiles)
-- `Makefile`: commands to run the samples
+- `Taskfile.yaml`: commands to run the samples
 
 ## Usage
 
@@ -44,17 +44,23 @@ python3 -m http.server -d web
 
 ### Sample code
 
-- Requires Docker (Docker Compose). Each language runs in its own container, so no local SBCL, JDK, or gcc is needed
+- Requires Docker (Docker Compose) and [Task](https://taskfile.dev) (`brew install go-task`). Each language runs in its own container, so no local SBCL, JDK, or gcc is needed
 - Build the images (first time only):
 
 ```sh
-make build
+task build
 ```
 
 - Run the quicksort sample in Lisp, Java, Python, and C:
 
 ```sh
-make quicksort
+task quicksort
+```
+
+- Start the Lisp REPL (with `rlwrap`, so arrow keys and history work):
+
+```sh
+task repl
 ```
 
 - Or log in to a container and work inside it (`samples/` is mounted read-only at `/samples`). The service name is `lisp`, `java`, `python`, or `c`:
@@ -69,5 +75,5 @@ docker compose -f docker/compose.yaml run --rm c bash
 ```sh
 # inside the container
 sbcl --script 01-algorithms/quicksort/quicksort.lisp
-sbcl                                                  # Lisp REPL
+rlwrap sbcl                                           # Lisp REPL (arrow keys work)
 ```

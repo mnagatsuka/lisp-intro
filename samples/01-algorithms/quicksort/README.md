@@ -4,10 +4,10 @@ Lisp、Java、Python、Cの4言語で実装している。比較するのはコ�
 
 ## 実行
 
-リポジトリのルートで実行する（初回は `make build`）。
+リポジトリのルートで実行する（初回は `task build`）。
 
 ```sh
-make quicksort
+task quicksort
 ```
 
 ## 個別に実行

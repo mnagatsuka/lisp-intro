@@ -7,7 +7,7 @@ Hunchentootの `define-easy-handler` によるサーバ（ポート4242）。Hun
 リポジトリのルートで実行する。`Ctrl+C` で停止する。
 
 ```sh
-make server
+task server
 ```
 
 ## 個別に起動

@@ -1,0 +1,80 @@
+version: "3"
+
+vars:
+  COMPOSE: docker compose -f docker/compose.yaml
+  RUN: "{{.COMPOSE}} run --rm"
+  QS: 01-algorithms/quicksort
+  FIB: 01-algorithms/fibonacci
+  PL: 02-functional/pipeline
+  TD: 02-functional/todo-ddd
+  MC: 04-macros
+
+tasks:
+  open-web:
+    desc: Open website
+    cmds:
+      - "open web/index.html"
+
+  build:
+    desc: Build the Docker images
+    cmds:
+      - "{{.COMPOSE}} build"
+
+  repl:
+    desc: Start the SBCL REPL (with line editing via rlwrap)
+    interactive: true
+    cmds:
+      # Docker's tty can report width=0 when rlwrap starts, so set the size first.
+      - '{{.RUN}} -e COLUMNS=$(tput cols) -e LINES=$(tput lines) lisp sh -c "stty cols \$COLUMNS rows \$LINES; exec rlwrap sbcl"'
+
+  quicksort:
+    desc: Run quicksort in Lisp, Java, Python and C
+    silent: true
+    cmds:
+      - echo "== Lisp =="
+      - "{{.RUN}} lisp sbcl --script {{.QS}}/quicksort.lisp"
+      - echo "== Java =="
+      - "{{.RUN}} java java {{.QS}}/Quicksort.java"
+      - echo "== Python =="
+      - "{{.RUN}} python python {{.QS}}/quicksort.py"
+      - echo "== C =="
+      - '{{.RUN}} c sh -c "gcc -O2 -o /tmp/qs {{.QS}}/quicksort.c && /tmp/qs"'
+
+  fib:
+    desc: Run fibonacci in Lisp (2 patterns), Java, Python and C
+    silent: true
+    cmds:
+      - echo "== Lisp =="
+      - "{{.RUN}} lisp sbcl --script {{.FIB}}/fib.lisp"
+      - echo "== Lisp (typed) =="
+      - "{{.RUN}} lisp sbcl --script {{.FIB}}/fib-typed.lisp"
+      - echo "== Java =="
+      - "{{.RUN}} java java {{.FIB}}/Fib.java"
+      - echo "== Python =="
+      - "{{.RUN}} python python {{.FIB}}/fib.py"
+      - echo "== C =="
+      - '{{.RUN}} c sh -c "gcc -O2 -o /tmp/fib {{.FIB}}/fib.c && /tmp/fib"'
+
+  pipeline:
+    desc: Run the functional pipeline sample
+    silent: true
+    cmds:
+      - "{{.RUN}} lisp sbcl --script {{.PL}}/pipeline.lisp"
+
+  todo:
+    desc: Run the DDD todo sample
+    silent: true
+    cmds:
+      - "{{.RUN}} lisp sbcl --script {{.TD}}/todo.lisp"
+
+  server:
+    desc: Start the web server (Ctrl+C to stop)
+    silent: true
+    cmds:
+      - "{{.COMPOSE}} up --build server"
+
+  macro:
+    desc: Run the my-unless macro sample
+    silent: true
+    cmds:
+      - "{{.RUN}} lisp sbcl --script {{.MC}}/my-unless.lisp"

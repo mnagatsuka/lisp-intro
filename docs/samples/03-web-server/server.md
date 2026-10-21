@@ -31,7 +31,7 @@
 - HunchentootはQuicklispで入れる。DockerのLispイメージにQuicklispを組み込み、Hunchentootはビルド時に取得しておく（実行時にネットワークを使わない）。
 - このサンプルはサーバが動き続けるので、他のサンプルと違い `up` で起動する。
   - `compose.yaml` にポート4242の公開を持つ `server` サービスを追加する（Lispのイメージを共有する）。
-- `make server` で起動し、`Ctrl+C` で止める。
+- `task server` で起動し、`Ctrl+C` で止める。
 
 ## 確認
 

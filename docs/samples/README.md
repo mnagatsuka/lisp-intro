@@ -77,16 +77,17 @@ samples/
 言語ごとにDockerコンテナを用意し、ツールチェーンのバージョンを固定する。ホストにSBCL、JDK、gccなどを入れなくても動かせるようにする。
 
 ```
-Makefile                # 実行コマンドのエントリポイント（make quicksort など）
+Taskfile.yaml          # 実行コマンドのエントリポイント（task quicksort など）
 docker/
 ├── compose.yaml        # 言語ごとに1サービス。samples/ を読み取り専用でマウントする
-├── lisp/Dockerfile     # SBCL + Quicklisp（依存はHunchentootのみ）
+├── lisp/Dockerfile     # SBCL + rlwrap + Quicklisp（依存はHunchentootのみ）
 ├── java/Dockerfile
 ├── python/Dockerfile
 └── c/Dockerfile
 ```
 
-- 実行は `docker compose -f docker/compose.yaml run --rm <言語> ...` で行う。`Makefile` にまとめ、`make fib` で4言語を実行して結果を並べて表示する。
+- 実行は `docker compose -f docker/compose.yaml run --rm <言語> ...` で行う。`Taskfile.yaml` にまとめ、`task fib` で4言語を実行して結果を並べて表示する。
+- REPLは `task repl` で起動する。SBCL単体では矢印キーが使えないため、`rlwrap` 経由で起動する（Lispのイメージに入れてある）。
 - Webサーバのサービスにはポートを割り当てる（例：4242）。
 - クイックソートは動作確認のために1回実行するだけでよい。比較するのはコードの読みやすさである。
 

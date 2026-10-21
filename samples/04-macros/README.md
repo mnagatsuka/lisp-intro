@@ -4,10 +4,10 @@
 
 ## 実行
 
-リポジトリのルートで実行する（初回は `make build`）。
+リポジトリのルートで実行する（初回は `task build`）。
 
 ```sh
-make macro
+task macro
 ```
 
 ## 個別に実行
