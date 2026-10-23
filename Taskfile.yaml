@@ -13,7 +13,12 @@ tasks:
   open-web:
     desc: Open website
     cmds:
-      - "open web/index.html"
+      - cmd: open web/index.html
+        platforms: [darwin]
+      - cmd: xdg-open web/index.html
+        platforms: [linux]
+      - cmd: powershell -NoProfile -Command "Start-Process web/index.html"
+        platforms: [windows]
 
   build:
     desc: Build the Docker images
