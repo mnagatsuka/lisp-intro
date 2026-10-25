@@ -55,6 +55,8 @@ samples/
 │   └── fibonacci/
 │       ├── fib.lisp            # 型宣言なし
 │       ├── fib-typed.lisp      # 型宣言あり
+│       ├── fib-loop.lisp       # ループ版（参考）
+│       ├── fib-tail.lisp       # 末尾再帰版（参考）
 │       ├── Fib.java
 │       ├── fib.py
 │       └── fib.c
